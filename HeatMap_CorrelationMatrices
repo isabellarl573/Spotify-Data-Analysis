@@ -1,0 +1,136 @@
+import numpy as np
+import scipy as sp #stats
+import matplotlib as mpl 
+import matplotlib.cm as cm #colormaps
+import matplotlib.pyplot as plt #sets up plotting
+import seaborn as sns #more plotting options
+
+import pandas as pd #lets us handle data as dataframes
+
+spain = pd.read_csv('/Users/vishw/Downloads/Spain_Top_50.csv')
+#drops specific columns
+corr_spain = spain.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+#sets figure size
+plt.figure(figsize=(14,6))
+#creates heatmap
+spain_heatmap=sns.heatmap(corr_spain, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+spain_heatmap.set_xticklabels(spain_heatmap.get_xticklabels(),rotation=90)
+#creates title 
+plt.title("Correlation between Top 50 Spain Song Variables", fontsize = 20, fontweight = "bold")
+
+brazil = pd.read_csv('/Users/vishw/Downloads/Brazil_Top_50.csv')
+corr_brazil = brazil.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+brazil_heatmap=sns.heatmap(corr_brazil, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+brazil_heatmap.set_xticklabels(brazil_heatmap.get_xticklabels(),rotation=90)
+
+france = pd.read_csv('/Users/vishw/Downloads/France_Top_50.csv')
+corr_france = france.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+france_heatmap=sns.heatmap(corr_france, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+france_heatmap.set_xticklabels(france_heatmap.get_xticklabels(),rotation=90)
+
+japan = pd.read_csv('/Users/vishw/Downloads/Japan_Top_50.csv')
+corr_japan = japan.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+japan_heatmap=sns.heatmap(corr_japan, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+japan_heatmap.set_xticklabels(japan_heatmap.get_xticklabels(),rotation=90)
+
+mexico = pd.read_csv('/Users/vishw/Downloads/Mexico_Top_50.csv')
+corr_mexico = mexico.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+mexico_heatmap=sns.heatmap(corr_mexico, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+mexico_heatmap.set_xticklabels(mexico_heatmap.get_xticklabels(),rotation=90)
+
+philippines = pd.read_csv('/Users/vishw/Downloads/Philippines_Top_50.csv')
+corr_philippines = philippines.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+philippines_heatmap=sns.heatmap(corr_philippines, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+philippines_heatmap.set_xticklabels(philippines_heatmap.get_xticklabels(),rotation=90)
+
+s_korea = pd.read_csv('/Users/vishw/Downloads/South Korea_Top_50.csv')
+corr_s_korea = s_korea.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+s_korea_heatmap=sns.heatmap(corr_s_korea, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+s_korea_heatmap.set_xticklabels(s_korea_heatmap.get_xticklabels(),rotation=90)
+
+argentina = pd.read_csv('/Users/vishw/Downloads/Argentina_Top_50.csv')
+corr_argentina = argentina.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+argentina_heatmap=sns.heatmap(corr_argentina, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+argentina_heatmap.set_xticklabels(argentina_heatmap.get_xticklabels(),rotation=90)
+
+usa = pd.read_csv('/Users/vishw/Downloads/USA_Top_50.csv')
+print(usa["energy"].mean())
+print(argentina["energy"].mean())
+print(mexico["energy"].mean())
+print(brazil["energy"].mean())
+print(france["energy"].mean())
+print(s_korea["energy"].mean())
+print(spain["energy"].mean())
+print(philippines["energy"].mean())
+print(japan["energy"].mean())
+corr_usa = usa.drop(['Unnamed: 0','song_id','name','album','artist','release_date','time_signature'],axis=1).corr(method="pearson")
+plt.figure(figsize=(14,6))
+usa_heatmap=sns.heatmap(corr_usa, fmt=".ig", vmin = -1, vmax=1,center=0,cmap="inferno",linewidths=1,linecolor="Black")
+usa_heatmap.set_xticklabels(usa_heatmap.get_xticklabels(),rotation=90)
+
+#heatmaps
+import geopandas as gp
+world = gp.read_file(gp.datasets.get_path('naturalearth_lowres'))
+#using rows only associated with specified countries
+new = world.loc[world['name'].isin(["Argentina", "Brazil", "South Korea", "Japan", "France", "Mexico", "Spain","Philippines","United States of America"])]
+#creates a copy
+x = world.copy()
+type(new)
+#creates new danceability column
+x['danceability'] = None
+#manually input danceability values for countries
+x.loc[x['name'] == "United States of America", 'danceability'] = '0.562'
+x.loc[x['name'] == "Argentina", 'danceability'] = '0.752'
+x.loc[x['name'] == "Mexico", 'danceability'] = '0.757'
+x.loc[x['name'] == "Brazil", 'danceability'] = '0.684'
+x.loc[x['name'] == "France", 'danceability'] = '0.693'
+x.loc[x['name'] == "South Korea", 'danceability'] = '0.676'
+x.loc[x['name'] == "Japan", 'danceability'] = '0.588'
+x.loc[x['name'] == "Spain", 'danceability'] = '0.747'
+x.loc[x['name'] == "Philippines", 'danceability'] = '0.613'
+ax = x["geometry"].boundary.plot(figsize=(20,16))
+print(ax)
+#plots heatmap
+x.plot( column="danceability", ax=ax, cmap='OrRd', 
+                     legend=True)
+#title of plot
+plt.title("Danceability of Top 50 Songs in Different Countries", fontsize = 20, fontweight = "bold")
+
+x['energy'] = None
+x.loc[x['name'] == "United States of America", 'energy'] = '0.521'
+x.loc[x['name'] == "Argentina", 'energy'] = '0.661'
+x.loc[x['name'] == "Mexico", 'energy'] = '0.639'
+x.loc[x['name'] == "Brazil", 'energy'] = '0.750'
+x.loc[x['name'] == "France", 'energy'] = '0.671'
+x.loc[x['name'] == "South Korea", 'energy'] = '0.722'
+x.loc[x['name'] == "Japan", 'energy'] = '0.762'
+x.loc[x['name'] == "Spain", 'energy'] = '0.713'
+x.loc[x['name'] == "Philippines", 'energy'] = '0.527'
+ax = x["geometry"].boundary.plot(figsize=(20,16))
+print(ax)
+x.plot( column="energy", ax=ax, cmap='OrRd', 
+                     legend=True)
+plt.title("Energy of Top 50 Songs in Different Countries", fontsize = 20, fontweight = "bold")
+
+
+
+
+
+#new["danceability"] = [0.562,0.752,0.757,0.684,0.693,0.676,0.747,0.613,0.588]
+#a = world.loc[world['name'] == 'Argentina']
+#b = world.loc[world['name'] == 'Brazil']
+#c = world.loc[world['name'] == 'South Korea']
+#d = world.loc[world['name'] == 'Japan']
+#e = world.loc[world['name'] == 'France']
+#f = world.loc[world['name'] == 'Mexico']
+#g = world.loc[world['name'] == 'Spain']
+#h = world.loc[world['name'] == 'Philippines']
+#i = world.loc[world['name'] == 'United States of America']
+
